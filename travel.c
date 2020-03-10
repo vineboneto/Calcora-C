@@ -98,7 +98,7 @@ int validMinutes() {
         printf("Minutos: ");
         scanf("%i", &minute);
         if(invalidMinutes(minute)) {
-            printf("Minutos Invalidos\n\n");
+            printf("Minutos Invalidos!!\n\n");
         }
     }
     return minute;
@@ -139,9 +139,9 @@ void convertToHour(int totalTime) {
     if(totalTime > 60) {
         int minutes = totalTime % 60;
         int hour = totalTime / 60;
-        printf("\n%i : %i\n", hour, minutes);
+        printf("\nTempo total: %i : %i\n", hour, minutes);
     } else {
-        printf("Minutos: %i\n", totalTime);
+        printf("\nMinutos total: %i\n", totalTime);
     }
 }
 
