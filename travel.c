@@ -15,22 +15,28 @@ typedef struct
 Time* loadTime();
 void Departure(Time*);
 void Arrival(Time*);
-void convertToMinutes(Time* time);
+int invalidHour(int);
+int invalidMinutes(int);
+int validHours();
+int validMinutes();
 int hourToMinutes(int);
 int calculeTime(Time*);
-
+void convertToHour(int);
+void convertToMinutes(Time* time);
 
 int main() {
     Time* time;
+    time->hourDeparture = 0;
     int control = 0;
     time = loadTime();
     if(time == NULL) {
         printf("Unallocated time");
     }
     while(control != -1) {
-        
-        Departure(time);
+        printf("\nObs:Nao funciona se ultrapassar 24h\n");
+        printf("\n'Ctrl + c' para encerrar\n");   
 
+        Departure(time);
         Arrival(time);
 
         convertToMinutes(time);
@@ -43,6 +49,7 @@ int main() {
         system("cls");
     }
 
+    free(time);
 
     return 0;
 }
@@ -56,19 +63,57 @@ Time* loadTime() {
 }
 
 void Departure(Time* time) {
-    printf("\nDeparture\n");
-    printf("Hour: ");
-    scanf("%i", &time->hourDeparture);
-    printf("Minutes: ");
-    scanf("%i", &time->minuteDeparture);
+    printf("\n..::Saida::..\n");
+
+    time->hourDeparture = validHours();
+
+    time->minuteDeparture = validMinutes();
+}
+
+int invalidHour(int hour) {
+    if(hour > 24 || hour < 0) {
+        return 1;
+    }
+    return 0;
+}
+
+int invalidMinutes(int minutes) {
+    if(minutes < 0 || minutes > 60) {
+        return 1;
+    }
+    return 0;
 }
 
 void Arrival(Time* time) {
-    printf("\nArrival\n");
-    printf("Hour: ");
-    scanf("%i", &time->hourArrival);
-    printf("Minutes: ");
-    scanf("%i", &time->minuteArrival);
+    printf("\n..::Chegada::..\n");
+
+    time->hourArrival = validHours();
+
+    time->minuteArrival = validMinutes();
+}
+
+int validMinutes() {
+    int minute = -1;
+    while(invalidMinutes(minute) == 1) {
+        printf("Minutos: ");
+        scanf("%i", &minute);
+        if(invalidMinutes(minute)) {
+            printf("Minutos Invalidos\n\n");
+        }
+    }
+    return minute;
+}
+
+int validHours() {
+    int hour = -1;
+    while(invalidHour(hour) == 1) {
+        printf("Horas: ");
+        scanf("%i", &hour);
+        if(invalidHour(hour)) {
+            printf("Hora Invalida!!\n\n");
+        }
+    }
+    return hour;
 }
 
 void convertToMinutes(Time* time) {
@@ -97,7 +142,7 @@ void convertToHour(int totalTime) {
         int hour = totalTime / 60;
         printf("\n%i : %i\n", hour, minutes);
     } else {
-        printf("Minutes: %i\n", totalTime);
+        printf("Minutos: %i\n", totalTime);
     }
 }
 
