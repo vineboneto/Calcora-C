@@ -8,35 +8,41 @@ typedef struct
     int minuteDeparture;
     int hourArrival; 
     int minuteArrival; 
-
+    int timeDeparture;
+    int timeArrival;
 }Time;
 
 Time* loadTime();
 void Departure(Time*);
 void Arrival(Time*);
-int calculeTotalHours(Time*);
-int calculeTotalMinutes(Time*);
+void convertToMinutes(Time* time);
+int hourToMinutes(int);
+int calculeTime(Time*);
 
 
 int main() {
     Time* time;
-
+    int control = 0;
     time = loadTime();
     if(time == NULL) {
         printf("Unallocated time");
     }
+    while(control != -1) {
+        
+        Departure(time);
 
-    Departure(time);
+        Arrival(time);
 
-    Arrival(time);
+        convertToMinutes(time);
 
-    convertToHour(time);
+        int totalTime = calculeTime(time);
 
-    int totalHour = calculeTotalHours(time);
-    int totalMinute = calculeTotalMinutes(time);
+        convertToHour(totalTime);
 
-    printf("Total Hour: %i\n", totalHour);    
-    printf("Total Minute: %i\n", totalMinute);    
+        system("pause");
+        system("cls");
+    }
+
 
     return 0;
 }
@@ -65,19 +71,34 @@ void Arrival(Time* time) {
     scanf("%i", &time->minuteArrival);
 }
 
-int calculeTotalHours(Time* time) {
-    if(time->hourDeparture > time->hourArrival) {
-        int aux = 24 - time->hourDeparture;
-        return aux + time->hourArrival;
-    }
-    return time->hourArrival - time->hourDeparture;
+void convertToMinutes(Time* time) {
+    time->hourArrival = hourToMinutes(time->hourArrival);
+    time->hourDeparture = hourToMinutes(time->hourDeparture);
+    time->timeArrival = time->hourArrival + time->minuteArrival;
+    time->timeDeparture = time->hourDeparture + time->minuteDeparture;
 }
 
-int calculeTotalMinutes(Time* time) {
+int hourToMinutes(int hour) {
+    return hour * 60;
+}
+
+int calculeTime(Time* time) {
     if(time->hourDeparture > time->hourArrival) {
-        int aux = 1440
+        int aux = 1440 - time->timeDeparture;
+        return aux + time->timeArrival;
+    } else {
+       return time->timeArrival - time->timeDeparture;
     }
-    return time->minuteArrival - time->minuteDeparture;
+}
+
+void convertToHour(int totalTime) {
+    if(totalTime > 60) {
+        int minutes = totalTime % 60;
+        int hour = totalTime / 60;
+        printf("\n%i : %i\n", hour, minutes);
+    } else {
+        printf("Minutes: %i\n", totalTime);
+    }
 }
 
 
