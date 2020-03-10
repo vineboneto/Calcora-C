@@ -70,6 +70,14 @@ void Departure(Time* time) {
     time->minuteDeparture = validMinutes();
 }
 
+void Arrival(Time* time) {
+    printf("\n..::Chegada::..\n");
+
+    time->hourArrival = validHours();
+
+    time->minuteArrival = validMinutes();
+}
+
 int invalidHour(int hour) {
     if(hour > 24 || hour < 0) {
         return 1;
@@ -82,14 +90,6 @@ int invalidMinutes(int minutes) {
         return 1;
     }
     return 0;
-}
-
-void Arrival(Time* time) {
-    printf("\n..::Chegada::..\n");
-
-    time->hourArrival = validHours();
-
-    time->minuteArrival = validMinutes();
 }
 
 int validMinutes() {
@@ -116,24 +116,23 @@ int validHours() {
     return hour;
 }
 
-void convertToMinutes(Time* time) {
-    time->hourArrival = hourToMinutes(time->hourArrival);
-    time->hourDeparture = hourToMinutes(time->hourDeparture);
-    time->timeArrival = time->hourArrival + time->minuteArrival;
-    time->timeDeparture = time->hourDeparture + time->minuteDeparture;
-}
-
 int hourToMinutes(int hour) {
     return hour * 60;
 }
 
 int calculeTime(Time* time) {
-    if(time->hourDeparture > time->hourArrival) {
+    if(time->timeDeparture > time->timeArrival) {
         int aux = 1440 - time->timeDeparture;
         return aux + time->timeArrival;
-    } else {
-       return time->timeArrival - time->timeDeparture;
     }
+       return time->timeArrival - time->timeDeparture;
+}
+
+void convertToMinutes(Time* time) {
+    time->hourArrival = hourToMinutes(time->hourArrival);
+    time->hourDeparture = hourToMinutes(time->hourDeparture);
+    time->timeArrival = time->hourArrival + time->minuteArrival;
+    time->timeDeparture = time->hourDeparture + time->minuteDeparture;
 }
 
 void convertToHour(int totalTime) {
