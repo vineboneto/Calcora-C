@@ -26,12 +26,15 @@ void convertToMinutes(Time* time);
 
 int main() {
     Time* time;
-    time->hourDeparture = 0;
+
     int control = 0;
+
     time = loadTime();
+
     if(time == NULL) {
         printf("Unallocated time");
     }
+    
     while(control != -1) {
         printf("\nObs:Nao funciona se ultrapassar 24h\n");
         printf("\n'Ctrl + c' para encerrar\n");   
