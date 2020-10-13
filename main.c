@@ -21,6 +21,7 @@ int hourToMinutes(int);
 int calculeTime(Time*);
 void convertToHour(int);
 void convertToMinutes(Time* time);
+void isnull(Time*);
 
 int main() {
     Time* time;
